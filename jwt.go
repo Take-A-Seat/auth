@@ -25,7 +25,7 @@ func authorize(c *gin.Context) (interface{}, error) {
 	userEmail := loginVals.Email
 	password := loginVals.Password
 
-	apiURL := apiUrl+ "/api/users/validateUser"
+	apiURL := apiUrl+ "/users/validateUser"
 	var jsonStr = []byte(`{"email":"` + userEmail + `","password":"` + password + `"}`)
 	userRequest, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(jsonStr))
 	if err != nil {
