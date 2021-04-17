@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/Take-A-Seat/auth/auth"
 	"github.com/Take-A-Seat/storage"
-	jwt "github.com/appleboy/gin-jwt"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	jwtGo "github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -205,8 +205,8 @@ func handleRefreshToken(c *gin.Context) {
 }
 
 var Port = "9100"
-var dbName = "ProAdminTest"
-var apiUrl = "https://api.test.proadminserv.ro"
+var dbName = "TakeASeat"
+var apiUrl = "http://54.93.123.171"
 
 func main() {
 	port := os.Getenv("AUTH_PORT")
@@ -221,7 +221,7 @@ func main() {
 	// Among others, the package needs some methods to help to handle the authentication. The function witch is attributed to
 	// LoginResponse (Login) is called when the auth is successfully done.
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Realm:           "ProAdmin",
+		Realm:           "TakeASeat",
 		Key:             []byte("secret key"),
 		Timeout:         time.Hour,
 		MaxRefresh:      time.Hour,
@@ -242,7 +242,7 @@ func main() {
 	}
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://test.proadminserv.ro", "https://owner.test.proadminserv.ro", "https://manager.staging.proadminserv.ro", "https://app.staging.proadminserv.ro"},
+		AllowOrigins:     []string{"http://localhost:3000", "*"},
 		AllowMethods:     []string{"PUT", "PATCH", "DELETE", "GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accepts", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},

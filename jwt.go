@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/ProAdminServ/auth/auth"
-	jwt "github.com/appleboy/gin-jwt"
+	"github.com/Take-A-Seat/auth/auth"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
@@ -25,7 +25,7 @@ func authorize(c *gin.Context) (interface{}, error) {
 	userEmail := loginVals.Email
 	password := loginVals.Password
 
-	apiURL := apiUrl+ "/users/validateUser"
+	apiURL := apiUrl+ "/api/users/validateUser"
 	var jsonStr = []byte(`{"email":"` + userEmail + `","password":"` + password + `"}`)
 	userRequest, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(jsonStr))
 	if err != nil {
