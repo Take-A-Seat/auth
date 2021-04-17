@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/ProAdminServ/auth/auth"
-	"github.com/ProAdminServ/storage"
+	"github.com/Take-A-Seat/auth/auth"
+	"github.com/Take-A-Seat/storage"
 	jwt "github.com/appleboy/gin-jwt"
 	jwtGo "github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
@@ -12,22 +12,21 @@ import (
 	"github.com/twinj/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-
-	//"go.mongodb.org/mongo-driver/x/mongo/driver/uuid"
 	"log"
 	"net/http"
 	"os"
 	"time"
 )
 
-var DB_USERNAME = "qubysAdmin"
-var DB_PASSWORD = "YgTEk6obBEP7eqCOz"
-var DB_HOST = "78.47.95.95"
+var mongoHost = "takeaseat.knilq.mongodb.net"
+var mongoUser = "admin"
+var mongoPass = "p4r0l4"
+var mongoDatabase = "TakeASeat"
 
 func isAuthenticated(c *gin.Context) {
 	claims := jwt.ExtractClaims(c)
 
-	client, err := storage.Connect(DB_USERNAME, DB_PASSWORD, DB_HOST)
+	client, err := storage.ConnectToDatabase(mongoUser, mongoPass, mongoHost, mongoDatabase)
 	if err != nil {
 		storage.DisconnectFromDatabase(client)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
@@ -92,7 +91,6 @@ func Login(c *gin.Context, status int, token string, expire time.Time) {
 		c.JSON(status, gin.H{"message": "Error!"})
 		return
 	}
-
 
 	refreshToken, err := createRefreshToken(c)
 	if err != nil {
@@ -244,7 +242,7 @@ func main() {
 	}
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://test.proadminserv.ro", "https://owner.test.proadminserv.ro","https://manager.staging.proadminserv.ro", "https://app.staging.proadminserv.ro"},
+		AllowOrigins:     []string{"http://localhost:3000", "https://test.proadminserv.ro", "https://owner.test.proadminserv.ro", "https://manager.staging.proadminserv.ro", "https://app.staging.proadminserv.ro"},
 		AllowMethods:     []string{"PUT", "PATCH", "DELETE", "GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accepts", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
