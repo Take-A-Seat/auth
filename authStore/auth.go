@@ -1,4 +1,4 @@
-package authStore
+package auth
 
 import (
 	"encoding/json"
