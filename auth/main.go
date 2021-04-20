@@ -1,4 +1,4 @@
-package main
+package validatorAuth
 
 import (
 	"encoding/json"
