@@ -1,13 +1,34 @@
-FROM golang:1.16
-WORKDIR /go/src/app
+FROM golang:alpine AS builder
+
+# Set necessary environmet variables needed for our image
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+
+# Move to working directory /build
+WORKDIR /build
+
+# Copy and download dependency using go mod
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+
+# Copy the code into the container
 COPY . .
-COPY .netrc /root/.netrc
-RUN chmod 600 /root/.netrc
 
-RUN git config --global --add url."git@github.com:".insteadOf "https://github.com"
-RUN GIT_TERMINAL_PROMPT=1 go get -d -v ./...
+# Build the application
+RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o auth
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
 
-RUN go install -v ./...
+# Copy binary from build to main folder
+RUN cp /build/auth .
 
-CMD ["go","run","."]
+# Build a small image
+FROM scratch
 
+COPY --from=builder /dist/auth /
+
+# Command to run
+ENTRYPOINT ["/auth"]
