@@ -1,4 +1,4 @@
-module github.com/Take-A-Seat/auth
+module auth
 
 go 1.16
 
