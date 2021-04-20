@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	auth "github.com/Take-A-Seat/auth/auth"
+	"github.com/Take-A-Seat/auth/auth"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
