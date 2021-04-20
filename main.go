@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Take-A-Seat/auth/authStore"
+	"github.com/Take-A-Seat/auth/auth"
 	"github.com/Take-A-Seat/storage"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	jwtGo "github.com/dgrijalva/jwt-go"
