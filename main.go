@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Take-A-Seat/auth/validatorAuth"
 	"github.com/Take-A-Seat/storage"
-	auth "github.com/Take-A-Seat/auth/auth"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	jwtGo "github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/cors"
@@ -225,7 +225,7 @@ func main() {
 		Key:             []byte("secret key"),
 		Timeout:         time.Hour,
 		MaxRefresh:      time.Hour,
-		IdentityKey:     auth.IdentityKey,
+		IdentityKey:     validatorAuth.IdentityKey,
 		PayloadFunc:     myPayload,
 		IdentityHandler: myIdentity,
 		Authenticator:   authorize,

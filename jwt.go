@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	auth "github.com/Take-A-Seat/auth/auth"
+	"github.com/Take-A-Seat/auth/validatorAuth"
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
@@ -53,7 +53,7 @@ func authorize(c *gin.Context) (interface{}, error) {
 		return nil, jwt.ErrFailedAuthentication
 	}
 
-	return &auth.User{
+	return &validatorAuth.User{
 		UserId:    fmt.Sprintf("%s", result["id"]),
 		Email:     userEmail,
 		LastName:  fmt.Sprintf("%s", result["lastName"]),
@@ -81,7 +81,7 @@ func unauthorized(c *gin.Context, code int, message string) {
 }
 
 func myPayload(data interface{}) jwt.MapClaims {
-	if v, ok := data.(*auth.User); ok {
+	if v, ok := data.(*validatorAuth.User); ok {
 
 		return jwt.MapClaims{
 			"UserId":    v.UserId,
