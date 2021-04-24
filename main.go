@@ -206,7 +206,7 @@ func handleRefreshToken(c *gin.Context) {
 
 var Port = "9100"
 var dbName = "TakeASeat"
-var apiUrl = "http://54.93.123.171"
+var apiUrl = "https://api.takeaseat.site"
 
 func main() {
 	port := os.Getenv("AUTH_PORT")
@@ -242,7 +242,7 @@ func main() {
 	}
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "*"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"PUT", "PATCH", "DELETE", "GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Accepts", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
