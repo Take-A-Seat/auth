@@ -76,7 +76,7 @@ func createRefreshToken(c *gin.Context) (string, error) {
 	rtClaims["FirstName"] = claims["FirstName"]
 	rtClaims["LastName"] = claims["LastName"]
 	rt := jwtGo.NewWithClaims(jwtGo.SigningMethodHS256, rtClaims)
-	secretKey := []byte("secret key")
+	secretKey := []byte("memgNN8gNWewfQlVeQOINrUdlaaahtbBLzSCDcvczcE2sydLXaNZr1cgs9TLNen")
 
 	RefreshToken, err := rt.SignedString(secretKey)
 	if err != nil {
@@ -222,7 +222,7 @@ func main() {
 	// LoginResponse (Login) is called when the auth is successfully done.
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
 		Realm:           "TakeASeat",
-		Key:             []byte("secret key"),
+		Key:             []byte("memgNN8gNWewfQlVeQOINrUdlaaahtbBLzSCDcvczcE2sydLXaNZr1cgs9TLNen"),
 		Timeout:         time.Hour,
 		MaxRefresh:      time.Hour,
 		IdentityKey:     validatorAuth.IdentityKey,
@@ -257,8 +257,10 @@ func main() {
 	auth.POST("/refresh_token", func(c *gin.Context) {
 		handleRefreshToken(c)
 	})
+
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
+		fmt.Println("fmmm")
 		auth.GET("/isAuthenticated", isAuthenticated)
 	}
 

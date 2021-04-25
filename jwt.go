@@ -24,8 +24,8 @@ func authorize(c *gin.Context) (interface{}, error) {
 	}
 	userEmail := loginVals.Email
 	password := loginVals.Password
-
 	apiURL := apiUrl+ "/users/validateUser"
+	fmt.Println("apiURL",apiURL)
 	var jsonStr = []byte(`{"email":"` + userEmail + `","password":"` + password + `"}`)
 	userRequest, err := http.NewRequest("POST", apiURL, bytes.NewBuffer(jsonStr))
 	if err != nil {
@@ -53,6 +53,7 @@ func authorize(c *gin.Context) (interface{}, error) {
 		return nil, jwt.ErrFailedAuthentication
 	}
 
+fmt.Println("result",result)
 	return &validatorAuth.User{
 		UserId:    fmt.Sprintf("%s", result["id"]),
 		Email:     userEmail,
@@ -65,7 +66,6 @@ func authorize(c *gin.Context) (interface{}, error) {
 func authorizator(data interface{}, c *gin.Context) bool {
 
 	fmt.Println("Authorizator", data)
-	fmt.Println("ceva....")
 	if v, ok := data.(*customClaims); ok && v.UserId != "" {
 		return true
 	}
