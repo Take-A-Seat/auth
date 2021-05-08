@@ -260,7 +260,6 @@ func main() {
 
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		fmt.Println("fmmm")
 		auth.GET("/isAuthenticated", isAuthenticated)
 	}
 

@@ -49,11 +49,11 @@ func authorize(c *gin.Context) (interface{}, error) {
 
 	var result map[string]interface{}
 	err = json.Unmarshal(userData, &result)
-	if err != nil {
+	if err != nil || validateUserResponse.StatusCode!=200 {
 		return nil, jwt.ErrFailedAuthentication
 	}
 
-fmt.Println("result",result)
+	fmt.Println("result",result)
 	return &validatorAuth.User{
 		UserId:    fmt.Sprintf("%s", result["id"]),
 		Email:     userEmail,
