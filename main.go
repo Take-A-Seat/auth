@@ -154,13 +154,11 @@ func handleRefreshToken(c *gin.Context) {
 	// if it's not expired and it's a valid refresh token we create a new auth token and a new refresh token and send them via endpoint.
 
 	refreshToken := mapToken["refresh_token"]
-	fmt.Println("map", mapToken)
 	token, err := jwtGo.Parse(refreshToken, func(token *jwtGo.Token) (interface{}, error) {
-		fmt.Println(refreshToken)
 		if _, ok := token.Method.(*jwtGo.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte("secret key"), nil
+		return []byte("memgNN8gNWewfQlVeQOINrUdlaaahtbBLzSCDcvczcE2sydLXaNZr1cgs9TLNen"), nil
 	})
 
 	if err != nil {
